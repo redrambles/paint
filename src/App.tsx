@@ -1,26 +1,40 @@
-import React, { useEffect, useRef } from "react";
-import { clearCanvas, setCanvasSize } from "./utils/canvasUtils";
+import { useEffect, useRef, MouseEvent } from "react";
+import { clearCanvas, drawStroke, setCanvasSize } from "./utils/canvasUtils";
+import { useSelector, useDispatch } from "react-redux";
+import { beginStroke, endStroke, updateStroke } from "./actions";
+import { currentStrokeSelector } from "./rootReducer";
+import { ColorPanel } from "./shared/ColorPanel";
 
 const WIDTH = 1012;
 const HEIGHT = 768;
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const currentStroke = useSelector(currentStrokeSelector);
 
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext("2d") };
   };
 
-  const startDrawing = () => {
-    console.log("Mouse is down and moving");
+  // If the points array has a length, we are drawing something
+  const isDrawing = !!currentStroke.points.length; // boolean
+
+  const dispatch = useDispatch();
+
+  const startDrawing = ({ nativeEvent }: MouseEvent<HTMLCanvasElement>) => {
+    const { offsetX, offsetY } = nativeEvent;
+    dispatch(beginStroke(offsetX, offsetY));
   };
 
   const endDrawing = () => {
-    console.log("Mouse is up or outside of canvas area");
+    if (isDrawing) dispatch(endStroke());
   };
 
-  const draw = () => {
-    console.log("mouse is moving");
+  const draw = ({ nativeEvent }: MouseEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return;
+
+    const { offsetX, offsetY } = nativeEvent;
+    dispatch(updateStroke(offsetX, offsetY));
   };
 
   useEffect(() => {
@@ -35,6 +49,14 @@ function App() {
     clearCanvas(canvas);
   }, []);
 
+  useEffect(() => {
+    const { context } = getCanvasWithContext();
+    if (!context) return;
+    requestAnimationFrame(() => {
+      drawStroke(context, currentStroke.points, currentStroke.color);
+    });
+  }, [currentStroke]);
+
   return (
     <div className='window'>
       <div className='title-bar'>
@@ -43,6 +65,8 @@ function App() {
           <button aria-label='Close' />
         </div>
       </div>
+
+      <ColorPanel />
       <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={endDrawing} onMouseOut={endDrawing} onMouseMove={draw} />
     </div>
   );
