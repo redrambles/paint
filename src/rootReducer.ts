@@ -5,5 +5,11 @@ type Action = {
 };
 
 export const rootReducer = (state: RootState = {}, action: Action) => {
-  return state;
+  switch (action.type) {
+    case "TEST_ACTION":
+      console.log("The test action was dispatched!");
+      return { ...state, test: "test" };
+    default:
+      return state;
+  }
 };
