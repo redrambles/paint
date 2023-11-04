@@ -11,6 +11,18 @@ function App() {
     return { canvas, context: canvas?.getContext("2d") };
   };
 
+  const startDrawing = () => {
+    console.log("Mouse is down and moving");
+  };
+
+  const endDrawing = () => {
+    console.log("Mouse is up or outside of canvas area");
+  };
+
+  const draw = () => {
+    console.log("mouse is moving");
+  };
+
   useEffect(() => {
     const { canvas, context } = getCanvasWithContext();
     if (!canvas || !context) return;
@@ -31,7 +43,7 @@ function App() {
           <button aria-label='Close' />
         </div>
       </div>
-      <canvas ref={canvasRef} />
+      <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={endDrawing} onMouseOut={endDrawing} onMouseMove={draw} />
     </div>
   );
 }
