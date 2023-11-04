@@ -1,21 +1,42 @@
-import { BEGIN_STROKE, UPDATE_STROKE, END_STROKE } from "./actions";
-type RootState = {};
+import { Action, BEGIN_STROKE, UPDATE_STROKE, END_STROKE } from "./actions";
+import { RootState } from "./utils/types";
 
-type Action = {
-  type: string;
+const initialState: RootState = {
+  currentStroke: {
+    points: [],
+    color: "#000000"
+  },
+  strokes: []
 };
 
-export const rootReducer = (state: RootState = {}, action: Action) => {
+export const rootReducer = (state: RootState = initialState, action: Action) => {
   switch (action.type) {
     case "TEST_ACTION":
-      console.log("The test action was dispatched!");
-      return { ...state, test: "test" };
+      console.log(action.payload);
+      return { ...state };
     case BEGIN_STROKE:
-      return state;
+      return {
+        ...state,
+        currentStroke: {
+          ...state.currentStroke,
+          points: [action.payload]
+        }
+      };
     case UPDATE_STROKE:
-      return state;
+      return {
+        ...state,
+        currentStroke: {
+          ...state.currentStroke,
+          points: [...state.currentStroke.points, action.payload]
+        }
+      };
     case END_STROKE:
-      return state;
+      if (!state.currentStroke.points.length) return state;
+      return {
+        ...state,
+        currentStroke: { ...state.currentStroke, points: [] },
+        strokes: [...state.strokes, state.currentStroke]
+      };
     default:
       return state;
   }

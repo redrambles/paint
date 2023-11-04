@@ -5,5 +5,5 @@ import { rootReducer } from "./rootReducer";
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger)));
 
-// To test the logger
-store.dispatch({ type: "TEST_ACTION" });
+//To test the logger
+store.dispatch({ type: "TEST_ACTION", payload: "Text action dispatched!" });

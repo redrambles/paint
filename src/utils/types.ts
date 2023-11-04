@@ -1,10 +1,10 @@
 export type RootState = {
   currentStroke: Stroke;
-  strokes: Stroke[];
+  strokes: Stroke[]; // array of Stroke type elements
 };
 
 export type Stroke = {
-  points: Point[];
+  points: Point[]; // array of Point type elements
   color: string;
 };
 
