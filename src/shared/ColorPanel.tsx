@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setStokeColor } from "../actions";
+import { setStokeColor } from "../modules/currentStroke/actions";
 
 const COLORS = [
   "#000000",
