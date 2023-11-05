@@ -1,18 +1,17 @@
-import { applyMiddleware, createStore, combineReducers } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import { reducer as historyIndex } from "./modules/historyIndex/reducer";
 import { reducer as currentStroke } from "./modules/currentStroke/reducer";
 import { reducer as strokes } from "./modules/strokes/reducer";
 import { logger } from "redux-logger";
+import { configureStore } from "@reduxjs/toolkit";
 
-export const store = createStore(
-  combineReducers({
+export const store = configureStore({
+  reducer: {
     historyIndex,
     currentStroke,
     strokes
-  }),
-  composeWithDevTools(applyMiddleware(logger))
-);
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
+});
 
 //To test the logger
 store.dispatch({ type: "TEST_ACTION", payload: "Text action dispatched!" });

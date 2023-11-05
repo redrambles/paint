@@ -1,4 +1,5 @@
 import { Point, Stroke } from "../../utils/types";
+import { AnyAction } from "@reduxjs/toolkit";
 
 export const BEGIN_STROKE = "BEGIN_STROKE";
 export const UPDATE_STROKE = "UPDATE_STROKE";
@@ -7,6 +8,7 @@ export const SET_STROKE_COLOR = "SET_STROKE_COLOR";
 export const TEST_ACTION = "TEST_ACTION";
 
 export type Action =
+  | AnyAction
   | {
       type: typeof BEGIN_STROKE;
       payload: Point;
