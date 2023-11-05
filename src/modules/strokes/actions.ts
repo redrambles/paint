@@ -11,5 +11,5 @@ export type Action =
     };
 
 export const endStroke = (historyIndex: number, stroke: Stroke) => {
-  return { type: END_STROKE, payload: { stroke, historyIndex } };
+  return { type: END_STROKE, payload: { historyIndex, stroke } };
 };

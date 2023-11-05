@@ -12,6 +12,3 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 });
-
-//To test the logger
-store.dispatch({ type: "TEST_ACTION", payload: "Text action dispatched!" });

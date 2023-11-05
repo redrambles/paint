@@ -1,7 +1,8 @@
 import { useEffect, useRef, MouseEvent, useContext } from "react";
 import { clearCanvas, drawStroke, setCanvasSize } from "./utils/canvasUtils";
 import { useSelector, useDispatch } from "react-redux";
-import { beginStroke, endStroke, updateStroke } from "./modules/currentStroke/actions";
+import { beginStroke, updateStroke } from "./modules/currentStroke/actions";
+import { endStroke } from "./modules/sharedActions";
 import { strokesSelector } from "./modules/strokes/reducer";
 import { currentStrokeSelector } from "./modules/currentStroke/reducer";
 import { historyIndexSelector } from "./modules/historyIndex/reducer";
@@ -60,18 +61,18 @@ function App() {
 
   const startDrawing = ({ nativeEvent }: MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = nativeEvent;
-    dispatch(beginStroke(offsetX, offsetY));
+    dispatch(beginStroke({ x: offsetX, y: offsetY }));
   };
 
   const endDrawing = () => {
-    if (isDrawing) dispatch(endStroke(historyIndex, currentStroke));
+    if (isDrawing) dispatch(endStroke({ historyIndex, stroke: currentStroke }));
   };
 
   const draw = ({ nativeEvent }: MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return;
 
     const { offsetX, offsetY } = nativeEvent;
-    dispatch(updateStroke(offsetX, offsetY));
+    dispatch(updateStroke({ x: offsetX, y: offsetY }));
   };
 
   return (

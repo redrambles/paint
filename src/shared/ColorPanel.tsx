@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setStokeColor } from "../modules/currentStroke/actions";
+import { setStrokeColor } from "../modules/currentStroke/actions";
 
 const COLORS = [
   "#000000",
@@ -35,7 +35,7 @@ const COLORS = [
 export const ColorPanel = () => {
   const dispatch = useDispatch();
   const setOnColorChange = (color: string) => {
-    dispatch(setStokeColor(color));
+    dispatch(setStrokeColor(color));
   };
   return (
     <div className='window colors-panel'>
