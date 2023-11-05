@@ -34,7 +34,7 @@ function App() {
       // draw only the strokes that weren't undone
       strokes.slice(0, strokes.length - historyIndex).forEach((stroke) => drawStroke(context, stroke.points, stroke.color));
     });
-  }, [historyIndex]);
+  }, [historyIndex, strokes]);
 
   useEffect(() => {
     const { canvas, context } = getCanvasWithContext();
