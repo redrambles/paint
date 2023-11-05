@@ -1,7 +1,10 @@
+import { ModalState } from "../modules/modals/slice";
+
 export type RootState = {
   currentStroke: Stroke;
   strokes: Stroke[]; // array of Stroke type elements
   historyIndex: number;
+  modalVisible: ModalState;
 };
 
 export type Stroke = {

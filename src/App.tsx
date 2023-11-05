@@ -10,6 +10,7 @@ import { CanvasContext } from "./CanvasContext";
 import { ColorPanel } from "./shared/ColorPanel";
 import { EditPanel } from "./shared/EditPanel";
 import { FilePanel } from "./shared/FilePanel";
+import { ModalLayer } from "./ModalLayer";
 
 const WIDTH = 1012;
 const HEIGHT = 768;
@@ -86,6 +87,7 @@ function App() {
       <EditPanel />
       <ColorPanel />
       <FilePanel />
+      <ModalLayer />
       <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={endDrawing} onMouseOut={endDrawing} onMouseMove={draw} />
     </div>
   );
