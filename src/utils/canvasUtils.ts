@@ -26,3 +26,10 @@ export const drawStroke = (context: CanvasRenderingContext2D, points: Point[], c
   });
   context.closePath();
 };
+
+export const getCanvasImage = async (canvas: HTMLCanvasElement | null): Promise<null | Blob> => {
+  return new Promise((resolve, reject) => {
+    if (!canvas) reject(null);
+    canvas?.toBlob(resolve);
+  });
+};
