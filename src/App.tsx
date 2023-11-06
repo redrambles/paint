@@ -1,4 +1,4 @@
-import { useEffect, useRef, MouseEvent, useContext } from "react";
+import { useEffect, MouseEvent, useContext } from "react";
 import { clearCanvas, drawStroke, setCanvasSize } from "./utils/canvasUtils";
 import { useSelector, useDispatch } from "react-redux";
 import { beginStroke, updateStroke } from "./modules/currentStroke/slice";
@@ -50,7 +50,7 @@ function App() {
     context.strokeStyle = "black";
 
     clearCanvas(canvas);
-  }, []);
+  }, [getCanvasWithContext]);
 
   useEffect(() => {
     const { context } = getCanvasWithContext();
